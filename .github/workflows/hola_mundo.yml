@@ -1,0 +1,26 @@
+# Mi primer workflow de GitHub Actions
+# Ubicación obligatoria: .github/workflows/ en la RAÍZ del repositorio
+name: Hola Mundo
+
+on:
+  # Se ejecuta en cada push a la rama main
+  push:
+    branches: [main]
+
+  # Permite lanzarlo manualmente desde la pestaña Actions (botón "Run workflow")
+  workflow_dispatch:
+
+jobs:
+  hola-mundo:
+    # GitHub aprovisiona una máquina virtual Ubuntu (ya trae Python instalado)
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1) Clona tu repositorio dentro de la máquina virtual.
+      #    Sin este paso, el runner no tendría main.py disponible.
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      # 2) Ejecuta el script desde la terminal del runner
+      - name: Ejecutar el script
+        run: python main.py
