@@ -1,0 +1,28 @@
+name: Saludo usando variables
+run-name: ¡Estoy aprendiendo a usar Variables!
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - aprendiendo-github-actions
+    paths:
+      - '.github/workflows/variables.yml'
+# Variable a nivel de workflow (disponible en todos los jobs)
+env:
+  DIA_DE_SEMANA: Lunes
+jobs:
+  saludo-variables:
+    runs-on: ubuntu-latest
+    # Variable a nivel de job
+    env:
+      SALUDO: Hola
+    steps:
+      - name: Saludar
+        run: echo "$SALUDO, $NOMBRE. Hoy es $DIA_DE_SEMANA!"
+        # Variable a nivel de step
+        env:
+          NOMBRE: ${{ github.actor }}
+      - name: Variable creada en tiempo de ejecución
+        run: echo "FECHA=$(date +%Y-%m-%d)" >> $GITHUB_ENV
+      - name: Usar la variable creada
+        run: echo "Fecha de ejecución $FECHA (vía contexto env ${{ env.FECHA }})"
