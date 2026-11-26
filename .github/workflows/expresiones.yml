@@ -1,0 +1,38 @@
+name: Expresiones
+run-name: ¡Estoy aprendiendo a usar Expresiones!
+on:
+  workflow_dispatch:
+    inputs:
+      edad:
+        description: 'Edad'
+        required: true
+        type: number
+      nombre:
+        description: 'Tu nombre'
+        required: true
+        default: 'Juan'
+        type: string
+jobs:
+  mayor:
+    # Expresión 1: comparación con operador >=
+    if: ${{ inputs.edad >= 18 }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Correr script
+        run: echo "${{ inputs.nombre }} es mayor de edad"
+  menor:
+    # Expresión 2: comparación con operador <
+    if: ${{ inputs.edad < 18 }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Correr script
+        run: echo "${{ inputs.nombre }} es menor de edad"
+  funciones:
+    runs-on: ubuntu-latest
+    steps:
+      # Expresión 3: función format()
+      - name: Saludo con format
+        run: echo "${{ format('Hola {0}, tienes {1} años', inputs.nombre, inputs.edad) }}"
+      # Expresión 4: función contains() + operador ternario (&& ||)
+      - name: Rama actual
+        run: echo "${{ contains(github.ref, 'aprendiendo') && 'Estás en la rama del curso' || 'Estás en otra rama' }}"
