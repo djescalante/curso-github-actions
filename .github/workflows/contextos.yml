@@ -1,0 +1,19 @@
+name: Contexto
+run-name: ¡Estoy aprendiendo a usar Contextos!
+on: push
+jobs:
+  check-main:
+    # Contexto github: solo corre en la rama main
+    if: ${{ github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Desplegando en la rama $GITHUB_REF"
+  info-contextos:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Contexto github
+        run: echo "Actor ${{ github.actor }}, evento ${{ github.event_name }}, rama ${{ github.ref_name }}"
+      - name: Contexto runner
+        run: echo "Runner con SO ${{ runner.os }} y arquitectura ${{ runner.arch }}"
+      - name: Contexto job
+        run: echo "Estado del job ${{ job.status }}"
